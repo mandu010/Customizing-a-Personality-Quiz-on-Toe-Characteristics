@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Do Your Toes Reveal About You?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', 'Calibri', 'Gilroy', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 50%, #f7931e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #ff9a56);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-content {
+            padding: 50px 40px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffede0 100%);
+            border-radius: 15px;
+            border-left: 6px solid #ff6b35;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.15);
+        }
+
+        .question h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border: 3px solid #ffede0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            border-color: #ff6b35;
+            background: #fff5f0;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.2);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: #ff6b35;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 40px auto;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .results {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffede0 50%, #ffd6cc 100%);
+            border-radius: 20px;
+            border: 4px solid #ff6b35;
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #ff9a56, #ff6b35);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .results h2 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .result-content {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-title {
+            color: #ff6b35;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .result-description {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #f7931e, #ff9a56);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(247, 147, 30, 0.3);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(247, 147, 30, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .quiz-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>What Do Your Toes Reveal About You?</h1>
+            <p>Before we get into the details, take this quick quiz to get a sneak peek at what your toes might say about you.</p>
+        </div>
+
+        <div class="quiz-content">
+            <form id="toeQuiz">
+                <div class="question">
+                    <h3>1. Which of your toes stands out the most?</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q1a" name="q1" value="a">
+                            <label for="q1a">Big Toe</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1b" name="q1" value="b">
+                            <label for="q1b">Second Toe</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1c" name="q1" value="c">
+                            <label for="q1c">Third Toe</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1d" name="q1" value="d">
+                            <label for="q1d">Fourth Toe</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q1e" name="q1" value="e">
+                            <label for="q1e">Little Toe</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>2. How do you handle challenges?</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q2a" name="q2" value="a">
+                            <label for="q2a">Analyse and solve step by step</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2b" name="q2" value="b">
+                            <label for="q2b">Take charge and lead the way</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2c" name="q2" value="c">
+                            <label for="q2c">Work tirelessly until it's done</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2d" name="q2" value="d">
+                            <label for="q2d">Seek emotional balance and harmony</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2e" name="q2" value="e">
+                            <label for="q2e">Go with the flow and adapt as needed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>3. Which of these best describes your personality?</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q3a" name="q3" value="a">
+                            <label for="q3a">Logical and communicative</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3b" name="q3" value="b">
+                            <label for="q3b">Confident and ambitious</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3c" name="q3" value="c">
+                            <label for="q3c">Hardworking and persistent</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3d" name="q3" value="d">
+                            <label for="q3d">Deeply emotional and empathetic</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3e" name="q3" value="e">
+                            <label for="q3e">Independent and spontaneous</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="calculateResults()">🔮 Reveal My Toe Personality!</button>
+            </form>
+
+            <div id="results" class="results">
+                <h2>Your Toe Reading Results</h2>
+                <div class="result-content">
+                    <div class="result-title" id="resultTitle"></div>
+                    <div class="result-description" id="resultDescription"></div>
+                </div>
+                <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testResults() {
+            // Removed debug function
+        }
+        
+        function calculateResults() {
+            // Get all selected answers
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            
+            // Check if all questions are answered
+            if (!q1 || !q2 || !q3) {
+                alert('🦶 Please answer all questions to discover your toe personality! 🦶');
+                return;
+            }
+            
+            // Count each answer type
+            const answers = [q1.value, q2.value, q3.value];
+            const counts = { a: 0, b: 0, c: 0, d: 0, e: 0 };
+            
+            answers.forEach(answer => {
+                counts[answer]++;
+            });
+            
+            // Find most common answer
+            let maxCount = 0;
+            let result = 'a';
+            
+            for (let letter in counts) {
+                if (counts[letter] > maxCount) {
+                    maxCount = counts[letter];
+                    result = letter;
+                }
+            }
+            
+            // Show results
+            showResult(result);
+        }
+        
+        function showResult(type) {
+            const titles = {
+                a: "The Communicator's Channel",
+                b: "The Born Leader", 
+                c: "The Worker's Fire",
+                d: "The Emotional Mirror",
+                e: "The Wild Card"
+            };
+            
+            const descriptions = {
+                a: "The big toe symbolises logic, intellect, and expression. A long big toe often indicates excellent verbal ability and a thoughtful mind. Individuals with this trait are natural problem-solvers and intuitive thinkers.",
+                b: "When the second toe is longer than the big toe, it often points to assertive leadership qualities. You carry strong decision-making energy and a heightened sense of responsibility.",
+                c: "A straight and proportionate third toe suggests high energy, dedication, and a desire to achieve. You are driven by an inner fire to accomplish your goals.",
+                d: "The fourth toe governs love, family, and emotional depth. You have a deep capacity for love and emotional connection. Your empathetic nature makes you a wonderful friend.",
+                e: "Small but powerful, the little toe represents independence and spontaneity. You march to the beat of your own drum and bring excitement wherever you go."
+            };
+            
+            document.getElementById('resultTitle').innerHTML = titles[type];
+            document.getElementById('resultDescription').innerHTML = descriptions[type];
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.getElementById('toeQuiz').reset();
+            document.getElementById('results').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle form submission - Simple approach
+        window.onload = function() {
+            document.getElementById('toeQuiz').onsubmit = function(e) {
+                e.preventDefault();
+                calculateResults();
+                return false;
+            };
+        };
+        
+        // Handle option clicks
+        document.querySelectorAll('.option').forEach(option => {
+            option.onclick = function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Visual feedback
+                const questionName = radio.name;
+                document.querySelectorAll(`input[name="${questionName}"]`).forEach(input => {
+                    const parent = input.parentElement;
+                    if (input.checked) {
+                        parent.style.borderColor = '#ff6b35';
+                        parent.style.background = '#fff5f0';
+                    } else {
+                        parent.style.borderColor = '#ffede0';
+                        parent.style.background = 'white';
+                    }
+                });
+            };
+        });
+    </script>
+</body>
+</html>
